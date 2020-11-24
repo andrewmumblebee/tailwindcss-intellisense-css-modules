@@ -207,10 +207,14 @@ function provideAtApplyCompletions(
     end: position,
   })
 
-  const match = findLast(/@apply\s+(?<classList>[^;}]*)$/gi, str)
+  let match = findLast(/@apply\s+(?<classList>[^;}]*)$/gi, str)
 
   if (match === null) {
-    return null
+    match = findLast(/composes:\s+(?<classList>[^;}]*)$/gi, str);
+
+    if (match === null) {
+      return null;
+    }
   }
 
   const classList = match.groups.classList
